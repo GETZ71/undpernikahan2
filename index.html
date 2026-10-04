@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan: Rian & Siska</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sunda: {
+                            gold: '#D4AF37',
+                            darkgold: '#997A15',
+                            batik: '#2C1810',
+                            cream: '#FBF9F1',
+                            accent: '#8B263E', // Magenta/maroon Sundanese velvet touch
+                            green: '#1E3F20'  // Daun pisang/forest traditional touch
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        script: ['"Great Vibes"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #2C1810;
+            color: #333333;
+            overflow-x: hidden;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+        /* Motif Megamendung / Batik CSS background subtle overlay */
+        .sunda-pattern {
+            background-color: #FBF9F1;
+            background-image: radial-gradient(#D4AF37 0.75px, transparent 0.75px), radial-gradient(#D4AF37 0.75px, #FBF9F1 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #997A15 0%, #D4AF37 50%, #F3E5AB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border {
+            border-image: linear-gradient(to right, #997A15, #D4AF37, #F3E5AB, #D4AF37, #997A15) 1;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2C1810;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-sunda-batik relative selection:bg-sunda-gold selection:text-white">
+
+    <!-- COVER / BUKA UNDANGAN -->
+    <div id="cover-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-sunda-batik text-sunda-cream px-4 text-center transition-all duration-700">
+        <!-- Absolute decorative corners -->
+        <div class="absolute top-4 left-4 text-sunda-gold text-3xl opacity-80"><i class="fa-solid fa-feather-pointed"></i></div>
+        <div class="absolute top-4 right-4 text-sunda-gold text-3xl opacity-80"><i class="fa-solid fa-feather-pointed"></i></div>
+        <div class="absolute bottom-4 left-4 text-sunda-gold text-3xl opacity-80"><i class="fa-solid fa-feather-pointed"></i></div>
+        <div class="absolute bottom-4 right-4 text-sunda-gold text-3xl opacity-80"><i class="fa-solid fa-feather-pointed"></i></div>
+
+        <div class="max-w-md w-full bg-black/40 backdrop-blur-md p-8 rounded-2xl border border-sunda-gold/40 shadow-2xl relative overflow-hidden">
+            <!-- Decorative badge -->
+            <div class="inline-block px-4 py-1 rounded-full bg-sunda-gold/20 border border-sunda-gold text-sunda-gold text-xs tracking-widest uppercase mb-6 font-semibold">
+                Pawiwahan / Resepsi Sunda Klasik
+            </div>
+
+            <h1 class="font-script text-6xl md:text-7xl text-sunda-gold mb-2">Rian & Siska</h1>
+            <p class="text-xs tracking-widest text-sunda-cream/80 uppercase mb-6 font-medium">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+            
+            <div id="guest-name-box" class="bg-sunda-cream/10 border border-sunda-gold/50 rounded-xl p-3 mb-8">
+                <h3 id="guest-name-text" class="font-serif text-lg text-sunda-gold font-semibold">Tamu Undangan</h3>
+                <p class="text-xs text-sunda-cream/70 mt-1">Mohon maaf apabila ada kesalahan penulisan nama/gelar</p>
+            </div>
+
+            <button onclick="openInvitation()" class="w-full py-4 px-6 bg-gradient-to-r from-sunda-darkgold via-sunda-gold to-sunda-darkgold text-sunda-batik font-bold rounded-xl shadow-lg hover:brightness-110 transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2 text-sm uppercase tracking-wider">
+                <i class="fa-solid fa-envelope-open-text text-lg"></i>
+                <span>Buka Undangan</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- BACKGROUND MUSIC PLAYER -->
+    <audio id="bg-music" loop>
+        <source src="https://actions.google.com/sounds/v1/ambiences/windchimes.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Floating Audio Control Button -->
+    <button id="audio-control" onclick="toggleAudio()" class="fixed bottom-6 right-6 z-40 bg-sunda-gold text-sunda-batik p-4 rounded-full shadow-2xl hover:scale-110 transition-all border-2 border-sunda-cream hidden items-center justify-center animate-spin" style="animation-duration: 8s;">
+        <i id="audio-icon" class="fa-solid fa-music text-xl"></i>
+    </button>
+
+    <!-- MAIN INVITATION CONTENT (Hidden until opened) -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 hidden sunda-pattern min-h-screen">
+
+        <!-- HERO SECTION -->
+        <section id="hero-section" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 py-20 bg-cover bg-center bg-no-repeat text-sunda-cream overflow-hidden">
+            <!-- Dark Overlay for Readability -->
+            <div class="absolute inset-0 z-0 bg-[#2C1810]/80"></div>
+            
+            <div class="z-10 max-w-2xl mx-auto space-y-6">
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-sunda-gold/60 bg-sunda-batik/60 backdrop-blur text-sunda-gold text-xs tracking-widest uppercase">
+                    <i class="fa-solid fa-ring"></i>
+                    <span>The Wedding Of</span>
+                </div>
+
+                <h2 id="hero-names" class="font-script text-7xl md:text-8xl text-sunda-gold animate-float">Rian & Siska</h2>
+                
+                <p id="hero-quote" class="font-serif italic text-sunda-cream/90 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+                    "Mahligai suci anu dirojong ku rasa kanyaah tur katineung, diparengkeun tepung dina ikatan suci pernikahan."
+                </p>
+
+                <div class="pt-4">
+                    <div id="hero-date-badge" class="inline-block border-y-2 border-sunda-gold py-3 px-8 text-sunda-gold font-serif text-lg tracking-widest">
+                        SABTU, 14 NOVEMBER 2026
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <a href="#countdown" class="inline-flex flex-col items-center text-sunda-gold/80 hover:text-sunda-gold transition-colors animate-bounce">
+                        <span class="text-xs uppercase tracking-widest mb-1">Gulir Ke Bawah</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SALAM & KATA PENGANTAR -->
+        <section class="py-20 px-4 max-w-3xl mx-auto text-center text-sunda-batik relative">
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-xl border border-sunda-gold/30 relative">
+                <!-- Top Ornament Corner -->
+                <div class="absolute top-4 left-4 text-sunda-gold text-2xl"><i class="fa-solid fa-pagoda"></i></div>
+                <div class="absolute top-4 right-4 text-sunda-gold text-2xl"><i class="fa-solid fa-pagoda"></i></div>
+
+                <h3 class="font-serif text-3xl font-bold text-sunda-accent mb-4">Assalamu'alaikum Wr. Wb.</h3>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-6">
+                    Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan. 
+                    Atas rahmat dan ridho-Nya, kami bermaksud menyelenggarakan resepsi pernikahan putra-putri kami:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10">
+                    <!-- Groom -->
+                    <div class="space-y-3 p-6 rounded-2xl bg-sunda-cream border border-sunda-gold/30 shadow-sm">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-sunda-gold shadow-md">
+                            <img id="groom-photo" src="" alt="Pengantin Pria" class="w-full h-full object-cover">
+                        </div>
+                        <h4 id="groom-name" class="font-serif text-2xl font-bold text-sunda-batik">Rian Pratama, S.T.</h4>
+                        <p class="text-xs text-sunda-darkgold font-semibold uppercase tracking-wider">Putra dari</p>
+                        <p id="groom-parents" class="text-sm text-gray-600">Bapak H. Dadang Mulyana & Ibu Hj. Siti Aisyah</p>
+                    </div>
+
+                    <!-- Bride -->
+                    <div class="space-y-3 p-6 rounded-2xl bg-sunda-cream border border-sunda-gold/30 shadow-sm">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-sunda-gold shadow-md">
+                            <img id="bride-photo" src="" alt="Pengantin Wanita" class="w-full h-full object-cover">
+                        </div>
+                        <h4 id="bride-name" class="font-serif text-2xl font-bold text-sunda-batik">Siska Lestari, S.Pd.</h4>
+                        <p class="text-xs text-sunda-darkgold font-semibold uppercase tracking-wider">Putri dari</p>
+                        <p id="bride-parents" class="text-sm text-gray-600">Bapak H. Ujang Suhendar & Ibu Hj. Rina Marlina</p>
+                    </div>
+                </div>
+
+                <p class="text-xs italic text-gray-500">
+                    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir memberikan doa restu.
+                </p>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN TIMER SECTION -->
+        <section id="countdown" class="py-16 px-4 bg-sunda-batik text-sunda-cream text-center relative">
+            <div class="max-w-xl mx-auto space-y-8">
+                <h3 class="font-serif text-3xl font-bold text-sunda-gold">Menuju Hari Bahagia</h3>
+                <p class="text-sm text-sunda-cream/80">Waktu tersisa menuju acara pernikahan kami:</p>
+
+                <div class="grid grid-cols-4 gap-3 md:gap-4">
+                    <div class="bg-black/40 border border-sunda-gold/40 p-4 rounded-xl backdrop-blur">
+                        <span id="days" class="font-serif text-3xl md:text-4xl font-bold text-sunda-gold block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-sunda-cream/70">Hari</span>
+                    </div>
+                    <div class="bg-black/40 border border-sunda-gold/40 p-4 rounded-xl backdrop-blur">
+                        <span id="hours" class="font-serif text-3xl md:text-4xl font-bold text-sunda-gold block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-sunda-cream/70">Jam</span>
+                    </div>
+                    <div class="bg-black/40 border border-sunda-gold/40 p-4 rounded-xl backdrop-blur">
+                        <span id="minutes" class="font-serif text-3xl md:text-4xl font-bold text-sunda-gold block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-sunda-cream/70">Menit</span>
+                    </div>
+                    <div class="bg-black/40 border border-sunda-gold/40 p-4 rounded-xl backdrop-blur">
+                        <span id="seconds" class="font-serif text-3xl md:text-4xl font-bold text-sunda-gold block">00</span>
+                        <span class="text-xs uppercase tracking-widest text-sunda-cream/70">Detik</span>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button onclick="addToCalendar()" class="inline-flex items-center space-x-2 px-6 py-3 bg-sunda-gold text-sunda-batik font-bold rounded-xl shadow-lg hover:bg-white transition-colors text-sm">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>Simpan Tanggal</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACARA & LOKASI -->
+        <section class="py-20 px-4 max-w-4xl mx-auto text-sunda-batik">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-widest uppercase text-sunda-darkgold font-bold">Rangkaian Acara</span>
+                <h3 class="font-serif text-4xl font-bold text-sunda-batik mt-1">Waktu & Tempat</h3>
+                <div class="w-24 h-1 bg-sunda-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Akad Nikah -->
+                <div class="bg-white/95 rounded-3xl p-8 shadow-xl border border-sunda-gold/40 relative flex flex-col justify-between">
+                    <div>
+                        <div class="absolute -top-4 right-6 bg-sunda-accent text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">
+                            Utama
+                        </div>
+                        <div class="text-sunda-darkgold text-3xl mb-4"><i class="fa-solid fa-handshake"></i></div>
+                        <h4 class="font-serif text-2xl font-bold text-sunda-batik mb-2">Akad Nikah</h4>
+                        <p id="akad-date" class="text-sm font-semibold text-sunda-accent mb-4"><i class="fa-regular fa-calendar-days mr-2"></i>Sabtu, 14 November 2026</p>
+                        <p id="akad-time" class="text-sm text-gray-700 mb-2"><i class="fa-regular fa-clock mr-2"></i>Pukul 08.00 WIB - Selesai</p>
+                        <p class="text-sm text-gray-700 mb-6"><i class="fa-solid fa-location-dot mr-2"></i><strong id="location-name">Gedung Graha Manggala Siliwangi</strong><br><span id="location-address" class="pl-5 text-gray-500 text-xs">Jl. Aceh No.66, Merdeka, Kec. Sumur Bandung, Kota Bandung</span></p>
+                    </div>
+                    <a id="map-link-akad" href="https://maps.google.com/?q=Graha+Manggala+Siliwangi+Bandung" target="_blank" class="w-full py-3 bg-sunda-batik text-sunda-gold font-semibold rounded-xl text-center hover:bg-sunda-accent transition-colors text-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Buka Google Maps</span>
+                    </a>
+                </div>
+
+                <!-- Resepsi -->
+                <div class="bg-white/95 rounded-3xl p-8 shadow-xl border border-sunda-gold/40 relative flex flex-col justify-between">
+                    <div>
+                        <div class="absolute -top-4 right-6 bg-sunda-gold text-sunda-batik px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">
+                            Sunda Klasik
+                        </div>
+                        <div class="text-sunda-darkgold text-3xl mb-4"><i class="fa-solid fa-champagne-glasses"></i></div>
+                        <h4 class="font-serif text-2xl font-bold text-sunda-batik mb-2">Resepsi Pernikahan</h4>
+                        <p id="resepsi-date" class="text-sm font-semibold text-sunda-accent mb-4"><i class="fa-regular fa-calendar-days mr-2"></i>Sabtu, 14 November 2026</p>
+                        <p id="resepsi-time" class="text-sm text-gray-700 mb-2"><i class="fa-regular fa-clock mr-2"></i>Pukul 11.00 WIB - 14.00 WIB</p>
+                        <p class="text-sm text-gray-700 mb-6"><i class="fa-solid fa-location-dot mr-2"></i><strong id="location-name-2">Gedung Graha Manggala Siliwangi</strong><br><span id="location-address-2" class="pl-5 text-gray-500 text-xs">Jl. Aceh No.66, Merdeka, Kec. Sumur Bandung, Kota Bandung</span></p>
+                    </div>
+                    <a id="map-link-resepsi" href="https://maps.google.com/?q=Graha+Manggala+Siliwangi+Bandung" target="_blank" class="w-full py-3 bg-sunda-batik text-sunda-gold font-semibold rounded-xl text-center hover:bg-sunda-accent transition-colors text-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Buka Google Maps</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOVE STORY -->
+        <section class="py-20 px-4 bg-sunda-cream/50 border-y border-sunda-gold/20">
+            <div class="max-w-3xl mx-auto text-sunda-batik">
+                <div class="text-center mb-12">
+                    <span class="text-xs tracking-widest uppercase text-sunda-darkgold font-bold">Perjalanan Cinta</span>
+                    <h3 class="font-serif text-4xl font-bold text-sunda-batik mt-1">Kisah Kami</h3>
+                    <div class="w-24 h-1 bg-sunda-gold mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="space-y-8 relative before:absolute before:inset-0 before:left-1/2 before:-translate-x-1/2 before:w-0.5 before:bg-sunda-gold/40">
+                    <!-- Story 1 -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-sunda-gold border-4 border-sunda-cream flex items-center justify-center text-xs font-bold text-sunda-batik z-10">1</div>
+                        <div class="w-full md:w-[45%] bg-white p-6 rounded-2xl shadow-md border border-sunda-gold/30">
+                            <span class="text-xs font-bold text-sunda-accent">Januari 2020</span>
+                            <h4 class="font-serif text-xl font-bold text-sunda-batik mt-1 mb-2">Pertama Kali Tepung</h4>
+                            <p class="text-sm text-gray-600">Kami dipertemukan dalam acara pameran budaya Sunda di Bandung. Berawal dari obrolan santai mengenai kesenian lokal, berlanjut menjadi kedekatan.</p>
+                        </div>
+                    </div>
+
+                    <!-- Story 2 -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-sunda-gold border-4 border-sunda-cream flex items-center justify-center text-xs font-bold text-sunda-batik z-10">2</div>
+                        <div class="w-full md:w-[45%] bg-white p-6 rounded-2xl shadow-md border border-sunda-gold/30">
+                            <span class="text-xs font-bold text-sunda-accent">Desember 2024</span>
+                            <h4 class="font-serif text-xl font-bold text-sunda-batik mt-1 mb-2">Komitmen & Lamaran</h4>
+                            <p class="text-sm text-gray-600">Setelah melalui berbagai suka dan duka bersama, keluarga besar kedua belah pihak sepakat untuk mengikat janji dalam acara lamaran adat Sunda.</p>
+                        </div>
+                    </div>
+
+                    <!-- Story 3 -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-sunda-gold border-4 border-sunda-cream flex items-center justify-center text-xs font-bold text-sunda-batik z-10">3</div>
+                        <div class="w-full md:w-[45%] bg-white p-6 rounded-2xl shadow-md border border-sunda-gold/30">
+                            <span class="text-xs font-bold text-sunda-accent">November 2026</span>
+                            <h4 class="font-serif text-xl font-bold text-sunda-batik mt-1 mb-2">Pernikahan Suci</h4>
+                            <p class="text-sm text-gray-600">Hari yang dinanti pun tiba. Kami siap mengarungi bahtera rumah tangga bersama dengan restu orang tua dan doa dari rekan sekalian.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALERI FOTO -->
+        <section class="py-20 px-4 max-w-4xl mx-auto text-sunda-batik">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-widest uppercase text-sunda-darkgold font-bold">Momen Kebersamaan</span>
+                <h3 class="font-serif text-4xl font-bold text-sunda-batik mt-1">Galeri Foto</h3>
+                <div class="w-24 h-1 bg-sunda-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Gallery Grid injected via template config -->
+            <div id="gallery-container" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Populated by script -->
+            </div>
+        </section>
+
+        <!-- RSVP & UCAPAN -->
+        <section class="py-20 px-4 bg-sunda-batik text-sunda-cream">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="text-xs tracking-widest uppercase text-sunda-gold font-bold">Konfirmasi Kehadiran</span>
+                    <h3 class="font-serif text-4xl font-bold text-sunda-gold mt-1">RSVP & Ucapan</h3>
+                    <div class="w-24 h-1 bg-sunda-gold mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <!-- Form RSVP -->
+                <form id="rsvp-form" onsubmit="submitRsvp(event)" class="bg-black/40 border border-sunda-gold/40 p-8 rounded-3xl backdrop-blur space-y-6 mb-12">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-sunda-gold font-semibold mb-2">Nama Lengkap</label>
+                        <input type="text" id="rsvp-name" required class="w-full bg-sunda-cream/10 border border-sunda-gold/40 rounded-xl px-4 py-3 text-sunda-cream focus:outline-none focus:border-sunda-gold text-sm" placeholder="Masukkan nama Anda...">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-sunda-gold font-semibold mb-2">Konfirmasi Kehadiran</label>
+                        <select id="rsvp-status" class="w-full bg-[#3a1f14] border border-sunda-gold/40 rounded-xl px-4 py-3 text-sunda-cream focus:outline-none focus:border-sunda-gold text-sm">
+                            <option value="Hadir">Hadir (Insya Allah)</option>
+                            <option value="Berhalangan">Berhalangan Hadir</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-sunda-gold font-semibold mb-2">Ucapan & Doa Restu</label>
+                        <textarea id="rsvp-message" rows="4" required class="w-full bg-sunda-cream/10 border border-sunda-gold/40 rounded-xl p-4 text-sunda-cream focus:outline-none focus:border-sunda-gold text-sm" placeholder="Tuliskan doa atau ucapan selamat..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-sunda-gold text-sunda-batik font-bold rounded-xl shadow-lg hover:bg-white transition-colors uppercase text-sm tracking-wider">
+                        Kirim Ucapan & Konfirmasi
+                    </button>
+                </form>
+
+                <!-- Daftar Ucapan Masuk -->
+                <div class="space-y-4">
+                    <h4 class="font-serif text-xl font-bold text-sunda-gold mb-4">Daftar Ucapan & Doa (<span id="wishes-count">3</span>)</h4>
+                    
+                    <div id="wishes-container" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        <div class="bg-black/30 border border-sunda-gold/20 p-5 rounded-2xl space-y-2">
+                            <div class="flex justify-between items-center">
+                                <h5 class="font-semibold text-sunda-gold text-sm">Kang Dedi Mulyadi</h5>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-900/60 text-green-300 border border-green-500/40">Hadir</span>
+                            </div>
+                            <p class="text-xs text-sunda-cream/80 leading-relaxed">Barakallahul lakuma wa baraka 'alaikuma wa jama'a bainakuma fi khair. Selamat menempuh hidup baru kang Rian & teh Siska!</p>
+                            <span class="text-[10px] text-sunda-cream/50 block">Baru saja</span>
+                        </div>
+
+                        <div class="bg-black/30 border border-sunda-gold/20 p-5 rounded-2xl space-y-2">
+                            <div class="flex justify-between items-center">
+                                <h5 class="font-semibold text-sunda-gold text-sm">Teteh Nia Daniaty</h5>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-900/60 text-green-300 border border-green-500/40">Hadir</span>
+                            </div>
+                            <p class="text-xs text-sunda-cream/80 leading-relaxed">Sakinah mawaddah warahmah dugikeun ka kolot. Bahagia teras salawasna!</p>
+                            <span class="text-[10px] text-sunda-cream/50 block">1 jam lalu</span>
+                        </div>
+
+                        <div class="bg-black/30 border border-sunda-gold/20 p-5 rounded-2xl space-y-2">
+                            <div class="flex justify-between items-center">
+                                <h5 class="font-semibold text-sunda-gold text-sm">Asep Spionase</h5>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-900/60 text-red-300 border border-red-500/40">Berhalangan</span>
+                            </div>
+                            <p class="text-xs text-sunda-cream/80 leading-relaxed">Mohon maaf pisan teu tiasa sumping margi aya halangan dinas luar kota. Doa terbaik kanggo panganten berdua!</p>
+                            <span class="text-[10px] text-sunda-cream/50 block">3 jam lalu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TANDA KASIH / DIGITAL GIFT -->
+        <section class="py-20 px-4 max-w-2xl mx-auto text-center text-sunda-batik">
+            <div class="bg-white/95 rounded-3xl p-8 md:p-12 shadow-xl border border-sunda-gold/40 space-y-6">
+                <div class="text-sunda-darkgold text-3xl"><i class="fa-solid fa-gift"></i></div>
+                <span class="text-xs tracking-widest uppercase text-sunda-darkgold font-bold">Tanda Kasih</span>
+                <h3 class="font-serif text-3xl font-bold text-sunda-batik">Kirim Hadiah Pernikahan</h3>
+                <p class="text-sm text-gray-600">
+                    Doa restu Anda merupakan karunia terindah bagi kami. Namun jika Anda ingin memberikan tanda kasih secara digital, dapat melalui rekening berikut:
+                </p>
+
+                <!-- Bank Info Container -->
+                <div id="bank-container" class="space-y-4">
+                    <!-- Populated by script -->
+                </div>
+
+                <!-- Kirim Kado Fisik -->
+                <div class="bg-sunda-cream p-6 rounded-2xl border border-sunda-gold/30 text-left space-y-2">
+                    <span class="font-bold text-sunda-batik uppercase tracking-wider text-xs block"><i class="fa-solid fa-box-archive mr-2"></i>Alamat Kado Fisik</span>
+                    <p id="physical-address" class="text-sm text-gray-700">Jl. Sunda No. 45, RT 02/RW 05, Kel. Braga, Kec. Sumur Bandung, Kota Bandung, Jawa Barat (40111)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="py-12 px-4 bg-black text-sunda-cream text-center border-t border-sunda-gold/20">
+            <div class="max-w-md mx-auto space-y-4">
+                <h2 id="footer-names" class="font-script text-5xl text-sunda-gold">Rian & Siska</h2>
+                <p class="text-xs text-sunda-cream/60">Merupakan suatu kehormatan & kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
+                <div class="pt-4 border-t border-sunda-gold/20 text-[11px] text-sunda-cream/40">
+                    &copy; 2026 Digital Invitation - Nuansa Sunda Klasik. All Rights Reserved.
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // ==========================================
+        // TEMPLATE CONFIGURATION (UBAH DATA DI SINI)
+        // ==========================================
+        const CONFIG = {
+            // Tanggal Acara untuk Hitung Mundur (Format: Bulan Hari, Tahun Jam:Menit:Detik)
+            weddingDateString: "Nov 14, 2026 08:00:00",
+            weddingDateText: "SABTU, 14 NOVEMBER 2026",
+
+            // Foto Background Hero & Pengantin (Ganti URL gambar sesuai keinginan)
+            images: {
+                heroBackground: "hero.jpg",
+                groomPhoto: "pria.jpg",
+                bridePhoto: "wanita.jpg",
+            },
+
+            // Data Pengantin Pria
+            groom: {
+                fullName: "Rian Pratama, S.T.",
+                parents: "Bapak H. Dadang Mulyana & Ibu Hj. Siti Aisyah"
+            },
+
+            // Data Pengantin Wanita
+            bride: {
+                fullName: "Siska Lestari, S.Pd.",
+                parents: "Bapak H. Ujang Suhendar & Ibu Hj. Rina Marlina"
+            },
+
+            // Informasi Waktu & Tempat Akad / Resepsi
+            venue: {
+                akadDate: "Sabtu, 14 November 2026",
+                akadTime: "Pukul 08.00 WIB - Selesai",
+                resepsiDate: "Sabtu, 14 November 2026",
+                resepsiTime: "Pukul 11.00 WIB - 14.00 WIB",
+                locationName: "Gedung Graha Manggala Siliwangi",
+                locationAddress: "Jl. Aceh No.66, Merdeka, Kec. Sumur Bandung, Kota Bandung",
+                googleMapsUrl: "https://maps.google.com/?q=Graha+Manggala+Siliwangi+Bandung"
+            },
+
+            // Galeri Foto (Tambahkan atau ganti link foto galeri di sini)
+            gallery: [
+                "prewed1.jpg",
+                "prewed2.jpg",
+                "prewed3.jpg",
+                "prewed4.jpg",
+                "prewed5.jpg",
+                "kedua mempelai.jpg"
+            ],
+
+            // Rekening / Digital Gift
+            bankAccounts: [
+                {
+                    bankName: "BCA",
+                    accountNumber: "1234567890",
+                    accountHolder: "Rian Pratama"
+                },
+                {
+                    bankName: "MANDIRI",
+                    accountNumber: "0987654321",
+                    accountHolder: "Siska Lestari"
+                }
+            ],
+            physicalAddress: "Jl. Sunda No. 45, RT 02/RW 05, Kel. Braga, Kec. Sumur Bandung, Kota Bandung, Jawa Barat (40111)"
+        };
+
+        // ==========================================
+        // AUTO APPLIER (JANGAN UBAH KECUALI PAHAM JS)
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Extract guest name from URL parameter ?to=Nama+Tamu
+            const urlParams = new URLSearchParams(window.search);
+            const guest = urlParams.get('to');
+            if (guest) {
+                document.getElementById('guest-name-text').innerText = decodeURIComponent(guest);
+            }
+
+            // Apply Hero Settings
+            const hero = document.getElementById('hero-section');
+            hero.style.backgroundImage = `url('${CONFIG.images.heroBackground}')`;
+            
+            const coupleNamesText = `${CONFIG.groom.fullName.split(',')[0]} & ${CONFIG.bride.fullName.split(',')[0]}`;
+            document.getElementById('hero-names').innerText = coupleNamesText;
+            document.getElementById('hero-date-badge').innerText = CONFIG.weddingDateText;
+            document.getElementById('footer-names').innerText = coupleNamesText;
+
+            // Apply Groom & Bride Data
+            document.getElementById('groom-photo').src = CONFIG.images.groomPhoto;
+            document.getElementById('groom-name').innerText = CONFIG.groom.fullName;
+            document.getElementById('groom-parents').innerText = CONFIG.groom.parents;
+
+            document.getElementById('bride-photo').src = CONFIG.images.bridePhoto;
+            document.getElementById('bride-name').innerText = CONFIG.bride.fullName;
+            document.getElementById('bride-parents').innerText = CONFIG.bride.parents;
+
+            // Apply Venue Data
+            document.getElementById('akad-date').innerHTML = `<i class="fa-regular fa-calendar-days mr-2"></i>${CONFIG.venue.akadDate}`;
+            document.getElementById('akad-time').innerHTML = `<i class="fa-regular fa-clock mr-2"></i>${CONFIG.venue.akadTime}`;
+            
+            document.getElementById('resepsi-date').innerHTML = `<i class="fa-regular fa-calendar-days mr-2"></i>${CONFIG.venue.resepsiDate}`;
+            document.getElementById('resepsi-time').innerHTML = `<i class="fa-regular fa-clock mr-2"></i>${CONFIG.venue.resepsiTime}`;
+
+            document.getElementById('location-name').innerText = CONFIG.venue.locationName;
+            document.getElementById('location-address').innerText = CONFIG.venue.locationAddress;
+            document.getElementById('location-name-2').innerText = CONFIG.venue.locationName;
+            document.getElementById('location-address-2').innerText = CONFIG.venue.locationAddress;
+
+            document.getElementById('map-link-akad').href = CONFIG.venue.googleMapsUrl;
+            document.getElementById('map-link-resepsi').href = CONFIG.venue.googleMapsUrl;
+
+            // Apply Gallery Photos
+            const galleryContainer = document.getElementById('gallery-container');
+            galleryContainer.innerHTML = CONFIG.gallery.map(imgUrl => `
+                <div class="overflow-hidden rounded-2xl shadow-lg border border-sunda-gold/35 group h-64">
+                    <img src="${imgUrl}" alt="Galeri Foto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+            `).join('');
+
+            // Apply Bank Accounts
+            const bankContainer = document.getElementById('bank-container');
+            bankContainer.innerHTML = CONFIG.bankAccounts.map(bank => `
+                <div class="bg-sunda-cream p-6 rounded-2xl border border-sunda-gold/30 text-left space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-sunda-batik uppercase tracking-wider text-xs">Bank ${bank.bankName}</span>
+                        <span class="font-serif font-bold text-lg text-sunda-accent">${bank.bankName}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="font-mono font-bold text-xl text-sunda-batik tracking-wider">${bank.accountNumber}</p>
+                            <p class="text-xs text-gray-500">a.n. ${bank.accountHolder}</p>
+                        </div>
+                        <button onclick="copyToClipboard('${bank.accountNumber}', this)" class="px-4 py-2 bg-sunda-batik text-sunda-gold rounded-xl text-xs font-semibold hover:bg-sunda-accent transition-colors flex items-center space-x-1.5">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Salin</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('physical-address').innerText = CONFIG.physicalAddress;
+        });
+
+        // Open Invitation Function
+        function openInvitation() {
+            const cover = document.getElementById('cover-screen');
+            const main = document.getElementById('main-content');
+            const audioBtn = document.getElementById('audio-control');
+            const audio = document.getElementById('bg-music');
+
+            // Fade out cover
+            cover.style.opacity = '0';
+            setTimeout(() => {
+                cover.style.display = 'none';
+                main.classList.remove('hidden');
+                // Trigger fade in
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                }, 50);
+                audioBtn.classList.remove('hidden');
+                audioBtn.classList.add('flex');
+                
+                // Play audio
+                audio.play().catch(e => console.log("Audio autoplay restricted:", e));
+            }, 700);
+        }
+
+        // Toggle Audio
+        let isPlaying = true;
+        function toggleAudio() {
+            const audio = document.getElementById('bg-music');
+            const icon = document.getElementById('audio-icon');
+            const btn = document.getElementById('audio-control');
+
+            if (isPlaying) {
+                audio.pause();
+                icon.classList.remove('fa-music');
+                icon.classList.add('fa-volume-xmark');
+                btn.style.animationPlayState = 'paused';
+            } else {
+                audio.play();
+                icon.classList.remove('fa-volume-xmark');
+                icon.classList.add('fa-music');
+                btn.style.animationPlayState = 'running';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Countdown Timer Logic using CONFIG date
+        const weddingDate = new Date(CONFIG.weddingDateString).getTime();
+        const countdownTimer = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("days").innerText = "0";
+                document.getElementById("hours").innerText = "0";
+                document.getElementById("minutes").innerText = "0";
+                document.getElementById("seconds").innerText = "0";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }, 1000);
+
+        // Add to Calendar Helper
+        function addToCalendar() {
+            const title = encodeURIComponent(`Pernikahan ${CONFIG.groom.fullName.split(',')[0]} & ${CONFIG.bride.fullName.split(',')[0]}`);
+            const details = encodeURIComponent(`Resepsi Pernikahan Adat Sunda Klasik di ${CONFIG.venue.locationName}.`);
+            const location = encodeURIComponent(`${CONFIG.venue.locationName}, ${CONFIG.venue.locationAddress}`);
+            const dates = "20261114T010000Z/20261114T070000Z";
+
+            const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+            window.open(googleUrl, '_blank');
+        }
+
+        // RSVP Form Submission
+        let wishesCount = 3;
+        function submitRsvp(e) {
+            e.preventDefault();
+            const name = document.getElementById('rsvp-name').value;
+            const status = document.getElementById('rsvp-status').value;
+            const message = document.getElementById('rsvp-message').value;
+
+            const container = document.getElementById('wishes-container');
+            const badgeClass = status === 'Hadir' ? 'bg-green-900/65 text-green-300 border-green-500/40' : 'bg-red-900/65 text-red-300 border-red-500/40';
+
+            const newCard = document.createElement('div');
+            newCard.className = 'bg-black/30 border border-sunda-gold/20 p-5 rounded-2xl space-y-2 animate-pulse';
+            newCard.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <h5 class="font-semibold text-sunda-gold text-sm">${escapeHtml(name)}</h5>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeClass} border">${status}</span>
+                </div>
+                <p class="text-xs text-sunda-cream/80 leading-relaxed">${escapeHtml(message)}</p>
+                <span class="text-[10px] text-sunda-cream/50 block">Baru saja</span>
+            `;
+
+            container.prepend(newCard);
+            wishesCount++;
+            document.getElementById('wishes-count').innerText = wishesCount;
+
+            // Reset form
+            document.getElementById('rsvp-form').reset();
+            showToast("Terima kasih! Konfirmasi kehadiran dan ucapan Anda berhasil dikirim.");
+        }
+
+        // Copy Bank Account Number
+        function copyToClipboard(text, btnElement) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fa-solid fa-check"></i> <span>Tersalin!</span>';
+            setTimeout(() => {
+                btnElement.innerHTML = originalText;
+            }, 2000);
+        }
+
+        // Safe HTML escape helper
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Custom notification toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-sunda-gold text-sunda-batik px-6 py-3 rounded-2xl shadow-2xl font-bold text-xs uppercase tracking-wider transition-all transform duration-300';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
